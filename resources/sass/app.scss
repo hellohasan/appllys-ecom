@@ -1,0 +1,54 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&family=Nunito+Sans:wght@400;600;700;800;900&display=swap');
+// Variables
+@import 'variables';
+
+// Bootstrap
+//@import '~bootstrap/scss/bootstrap';
+
+
+//admin lte css
+@import '~admin-lte/plugins/fontawesome-free/css/all.min.css';
+@import '~admin-lte/plugins/select2/css/select2.min.css';
+@import '~admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css';
+@import "~bootstrap-toggle/css/bootstrap-toggle.min.css";
+@import '~admin-lte/dist/css/adminlte.min.css';
+@import "~nprogress/nprogress.css";
+@import "datatables.net-bs4/css/dataTables.bootstrap4.min.css";
+@import "datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css";
+@import "datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css";
+@import "vue2-datepicker/index.css";
+
+body{
+    font-family:"Nunito Sans","Noto Sans Bengali", sans-serif !important;
+}
+/* @font-face {
+    font-family: 'SolaimanLipiNormal';
+    font-style: normal;
+    font-weight: normal;
+    src: local('SolaimanLipiNormal'), url('../fonts/solaimanlipi.woff') format('woff');
+} */
+
+.router-link-exact-active{
+    background-color: #007bff !important;
+    color: #ffffff !important;
+}
+
+#nprogress .bar {
+    background: #28a745;
+    height: 4px;
+    z-index: 99999
+}
+/* date picker css */
+.mx-datepicker {
+    display: block;
+    width: 100%;
+}
+.mx-input {
+    height: 38px;
+    font-size: 16px;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}

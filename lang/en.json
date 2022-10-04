@@ -1,0 +1,19 @@
+{
+    "The :attribute must contain at least one letter.": "The :attribute must contain at least one letter.",
+    "The :attribute must contain at least one number.": "The :attribute must contain at least one number.",
+    "The :attribute must contain at least one symbol.": "The :attribute must contain at least one symbol.",
+    "The :attribute must contain at least one uppercase and one lowercase letter.": "The :attribute must contain at least one uppercase and one lowercase letter.",
+    "The given :attribute has appeared in a data leak. Please choose a different :attribute.": "The given :attribute has appeared in a data leak. Please choose a different :attribute.",
+    "BDT": "BDT",
+    "delete": "Delete",
+    "show": "Show",
+    "All": "All",
+    "Salary": "Salary",
+    "Credit": "Credit",
+    "Debit": "Debit",
+    "Approved": "Approved",
+    "Pending": "Pending",
+    "Activated": "Activated",
+    "Deactivated": "Deactivated",
+    "NA": "N/A"
+}
