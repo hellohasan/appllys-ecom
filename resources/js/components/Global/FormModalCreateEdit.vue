@@ -3,8 +3,8 @@
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="myModalLabel" v-if="editMode">{{title }} {{ $t('UpdateModal')}}</h5>
-					<h5 class="modal-title" id="myModalLabel" v-else>{{title }} {{ $t('AddModal')}}</h5>
+					<h5 class="modal-title" id="myModalLabel" v-if="editMode">Update {{title }}</h5>
+					<h5 class="modal-title" id="myModalLabel" v-else>Add New {{title }}</h5>
 
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -15,10 +15,9 @@
 						<slot />
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ $t('Close') }}
-						</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						<button :disabled="form.busy" type="submit" class="btn btn-primary">
-							{{ editMode ? $t('Update') : $t('Create') }}
+							{{ editMode ? 'Update' : 'Create' }}
 						</button>
 					</div>
 				</form>
@@ -51,6 +50,9 @@
 				this.form.clear();
 				this.editMode = mode;
 				$('#myModal').modal('show');
+			},
+			hideMyModal() {
+				$('#myModal').modal('hide');
 			},
 			createModal() {
 				this.$parent.storeForm();

@@ -1,5 +1,5 @@
 import store from "../stores";
-let title = store.getters.getBasic.title;
+let title = store.getters.getBasic.title ?? process.env.MIX_APP_NAME;
 
 export function getPageTitle(to) {
   //to.matched.some((record) => record.meta.requireAuth);

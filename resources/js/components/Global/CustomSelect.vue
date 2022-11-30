@@ -58,8 +58,10 @@
 		watch: {
 			value: function (value) {
 				// update value
-				$("#" + this.selectId).val(value).trigger('change');
-				this.$emit('change', value);
+				if (value != old) {
+					$("#" + this.selectId).val(value).trigger('change');
+					this.$emit('change', value);
+				}
 			},
 			options: function (options) {
 				// update options

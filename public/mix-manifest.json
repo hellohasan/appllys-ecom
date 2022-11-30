@@ -1,8 +1,15 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/admin/categories.js": "/js/admin/categories.js",
     "/js/dashboard/dashboard.js": "/js/dashboard/dashboard.js",
     "/js/dashboard/users.js": "/js/dashboard/users.js",
     "/js/dashboard/profile.js": "/js/dashboard/profile.js",
+    "/js/admin/merchant-store.js": "/js/admin/merchant-store.js",
+    "/js/admin/merchant-store/create.js": "/js/admin/merchant-store/create.js",
+    "/js/admin/merchant-store/edit.js": "/js/admin/merchant-store/edit.js",
+    "/js/admin/products.js": "/js/admin/products.js",
+    "/js/admin/products/create.js": "/js/admin/products/create.js",
+    "/js/admin/products/edit.js": "/js/admin/products/edit.js",
     "/js/settings/basic-setting.js": "/js/settings/basic-setting.js",
     "/css/app.css": "/css/app.css"
 }

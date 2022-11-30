@@ -1,18 +1,23 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\ForgetPasswordController;
-use App\Http\Controllers\Api\Auth\LoginController;
-use App\Http\Controllers\Api\Auth\RegisterController;
-use App\Http\Controllers\Api\Auth\ResetPasswordController;
-use App\Http\Controllers\Api\DashboardController;
-use App\Http\Controllers\Api\Settings\BasicSettingController;
-use App\Http\Controllers\Api\Settings\LanguageSettingController;
-use App\Http\Controllers\Api\Settings\PermissionController;
-use App\Http\Controllers\Api\Settings\RoleController;
-use App\Http\Controllers\Api\User\UserController;
-use App\Http\Controllers\Api\V1\SelectDropdownController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\User\UserController;
+use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Settings\RoleController;
+use App\Http\Controllers\Api\V1\SelectDropdownController;
+use App\Http\Controllers\Api\Auth\ResetPasswordController;
+use App\Http\Controllers\Api\V1\Product\ProductController;
+use App\Http\Controllers\Api\Auth\ForgetPasswordController;
+use App\Http\Controllers\Api\Settings\PermissionController;
+use App\Http\Controllers\Api\Settings\BasicSettingController;
+use App\Http\Controllers\Api\V1\Admin\MerchantStoreController;
+use App\Http\Controllers\Api\Settings\LanguageSettingController;
+use App\Http\Controllers\Api\V1\Admin\Category\CategoryController;
+use App\Http\Controllers\Api\V1\Admin\Category\SubCategoryController;
+use App\Http\Controllers\Api\V1\Admin\Category\ChildCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,8 +59,26 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('role-list', [DashboardController::class, 'getRoleList']);
 
+    /* Categories Route List */
+    Route::apiResource('categories', CategoryController::class)->except(['show', 'destroy']);
+    Route::apiResource('subcategories', SubCategoryController::class)->except(['show', 'destroy']);
+    Route::apiResource('childcategories', ChildCategoryController::class)->except(['show', 'destroy']);
+
+    /* Merchant Store */
+    Route::get('merchant-stores', [MerchantStoreController::class, 'index']);
+    Route::post('merchant-stores', [MerchantStoreController::class, 'store']);
+    Route::get('merchant-stores/{id}/edit', [MerchantStoreController::class, 'edit']);
+    Route::put('merchant-stores/{id}/edit', [MerchantStoreController::class, 'update']);
+
+    /* Product Controller */
+    Route::post('products', [ProductController::class, 'store']);
+
     Route::get('basic-setting', [BasicSettingController::class, 'getBasicSetting']);
     Route::post('basic-setting-submit', [BasicSettingController::class, 'submitBasicSetting']);
+
+    Route::get('load-category-dropdown', [SelectDropdownController::class, 'loadCategories']);
+    Route::get('load-category-subcategories-dropdown/{catId}', [SelectDropdownController::class, 'loadCategorySubcategories']);
+    Route::get('load-merchant-list', [SelectDropdownController::class, 'loadMerchants']);
 
     Route::get('load-division-districts/{id}', [SelectDropdownController::class, 'loadDivisionDistricts']);
     Route::get('load-district-upazilas/{id}', [SelectDropdownController::class, 'loadDistrictUpazilas']);

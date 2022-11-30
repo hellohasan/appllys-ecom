@@ -1,0 +1,105 @@
+version: '3.8'
+
+services:
+    #Ngnix Server
+    nginx:
+        image: nginx:alpine
+        container_name: appllys-ecom-nginx
+        restart: unless-stopped
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - ./:/var/www/html:cached
+            - ./.docker/nginx:/etc/nginx/conf.d
+            - ./.docker/nginx/ssl:/etc/nginx/conf.d/ssl
+        depends_on:
+            - app
+        networks:
+            - appllys-ecom-network
+
+    #Main applocation
+    app:
+        build:
+            context: ./.docker/php
+            dockerfile: Dockerfile
+        container_name: appllys-ecom-app
+        restart: unless-stopped
+        depends_on:
+            - mariadb
+            - redis
+        volumes:
+            - ./:/var/www/html:cached
+            - ./.docker/php/php-fpm.ini:/usr/local/etc/php/conf.d/custom.ini
+        networks:
+            - appllys-ecom-network
+
+    # Database Server
+    mariadb:
+        image: mariadb:10.5.5
+        container_name: appllys-ecom-mariadb
+        restart: unless-stopped
+        ports:
+            - 3306:3306
+        volumes:
+            - ./.data/mysql:/var/lib/mysql
+        environment:
+            - MYSQL_DATABASE=${DB_DATABASE}
+            - MYSQL_USER=${DB_USERNAME}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+            - MYSQL_ROOT_PASSWORD=root
+        networks:
+            - appllys-ecom-network
+
+    # PhpMyAdmin
+    phpmyadmin:
+        image: phpmyadmin:latest
+        container_name: appllys-ecom-phpmyadmin
+        restart: unless-stopped
+        depends_on:
+            - mariadb
+        ports:
+            - 8077:80
+        volumes:
+            - ./.data/phpmyadmin:/var/lib/phpmyadmin/data
+        environment:
+            - PMA_HOST=mariadb
+            - PMA_USER=${DB_USERNAME}
+            - PMA_PASSWORD=${DB_PASSWORD}
+        networks:
+            - appllys-ecom-network
+
+    #Redis Server
+    redis:
+        image: redis:alpine
+        container_name: appllys-ecom-redis
+        restart: unless-stopped
+        volumes:
+            - ./.data/redis:/data
+        ports:
+            - 6379:6379
+        networks:
+            - appllys-ecom-network
+
+    #Node Server
+    node:
+        build:
+            context: ./.docker/node
+            target: node
+            dockerfile: Dockerfile
+        container_name: appllys-ecom-node
+        restart: unless-stopped
+        volumes:
+            - ./:/var/www/html:cached
+            - ./node_modules:/usr/src/node_modules
+        tty: true
+        networks:
+            - appllys-ecom-network
+
+networks:
+    appllys-ecom-network:
+        driver: bridge
+
+volumes:
+    appllys-ecom-volume:
+        driver: local

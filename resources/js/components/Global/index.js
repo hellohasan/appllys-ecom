@@ -11,6 +11,8 @@ import FormGroupToggle from "./FormGroupToggle";
 import FormGroupTextarea from "./FormGroupTextarea";
 import FormGroupImage from "./FormGroupImage";
 import FormGroupSelectMultiple from "./FormGroupSelectMultiple";
+import FormModalCreateEdit from "./FormModalCreateEdit";
+import Status from "./Status";
 import Errors from "./Errors";
 import VueElementLoading from "vue-element-loading";
 
@@ -34,6 +36,8 @@ window.Form = Form;
   FormGroupToggle,
   FormGroupImage,
   FormGroupSelectMultiple,
+  FormModalCreateEdit,
+  Status,
   HasError,
   AlertError,
   AlertErrors,

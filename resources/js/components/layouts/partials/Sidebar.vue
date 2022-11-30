@@ -28,8 +28,10 @@
 						</router-link>
 					</li>
 
+					<admin></admin>
+
 					<!-- Settings Section -->
-					<li v-role="['Super Admin','Admin','Register']" class="nav-header">{{ $t('GeneralSettings') }}</li>
+					<li v-role="['Super Admin','Admin']" class="nav-header">{{ $t('GeneralSettings') }}</li>
 
 					<li v-role="['Super Admin']" class="nav-item">
 						<a href="#" class="nav-link">
@@ -115,10 +117,12 @@
 <script>
 	import { mapGetters } from 'vuex'
 	import logoutMix from '../../../mixins/logout'
+	import Admin from './Menus/Admin.vue';
 	export default {
 		name: 'Sidebar',
 		mixins: [logoutMix],
 		components: {
+			Admin
 		},
 		computed: {
 			...mapGetters({

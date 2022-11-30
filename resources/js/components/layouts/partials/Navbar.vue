@@ -9,7 +9,7 @@
 
 		<!-- Right navbar links -->
 		<ul class="navbar-nav ml-auto">
-			<li v-if="Object.keys(locales).length > 1" class="nav-item dropdown">
+			<!-- <li v-if="Object.keys(locales).length > 1" class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle font-weight-bold" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="fas fa-globe"></i> {{ locales[locale] }}
 				</a>
@@ -18,7 +18,7 @@
 						{{ value }}
 					</a>
 				</div>
-			</li>
+			</li> -->
 			<li class="nav-item">
 				<a class="nav-link" data-widget="fullscreen" href="#" role="button">
 					<i class="fas fa-expand-arrows-alt"></i>

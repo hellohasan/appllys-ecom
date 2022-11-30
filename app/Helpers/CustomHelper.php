@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Artisan;
 
 class CustomHelper
@@ -49,13 +50,16 @@ class CustomHelper
      * @param $file
      * @param $prefix
      */
+    /**
+     * @param $limit
+     */
     public static function getFileNameExtension($file, $prefix = '')
     {
         $ext = explode('/', substr($file, 0, strpos($file, ';')))[1];
         if ($prefix != '') {
-            return $prefix . '_' . time() . '.' . $ext;
+            return $prefix . '_' . (string) Str::random(10) . '.' . $ext;
         }
-
-        return time() . '.' . $ext;
+        return (string) Str::random(10) . '.' . $ext;
     }
+
 }

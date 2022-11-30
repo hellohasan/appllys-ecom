@@ -1,16 +1,16 @@
 <template>
 	<div class="form-group" :class="col">
 		<label :for="name">{{label}}:</label>
-		<div class="input-group image-preview">
-			<input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+		<div class="input-group image-preview" :class="imagePreview">
+			<input type="text" class="form-control image-preview-filename" :class="imagePreviewFilename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
 			<div class="input-group-append">
 				<!-- image-preview-clear button -->
-				<button type="button" class="btn btn-outline-secondary image-preview-clear" @click="previewClear" style="display:none;">
+				<button type="button" class="btn btn-outline-secondary image-preview-clear" :class="imagePreviewClear" @click="previewClear" style="display:none;">
 					<i class="fas fa-times"></i> Clear
 				</button>
-				<div class="btn btn btn-outline-secondary image-preview-input">
+				<div class="btn btn btn-outline-secondary image-preview-input" :class="imagePreviewInput">
 					<i class="far fa-folder-open"></i>
-					<span class="image-preview-input-title">Browse</span>
+					<span class="image-preview-input-title" :class="imagePreviewInputTitle">Browse</span>
 					<input type="file" ref="fileInput" accept="image/*" :name="name" @input="onSelectFile" /> <!-- rename it -->
 				</div>
 			</div>
@@ -56,15 +56,21 @@
 			},
 			size: {
 				required: false,
-				default: 200,
+				default: 500,
+			},
+		},
+		watch: {
+			value: function (value) {
+				if (value == null || value == '') {
+					this.previewClear();
+				}
 			},
 		},
 		mounted() {
-
-			$(function () {
-				$(".image-preview-filename").val('No file chosen');
+			this.$nextTick(() => {
+				$("." + this.imagePreviewFilename).val('No file chosen');
 				// Set the popover default content
-				$('.image-preview').popover({
+				$('.' + this.imagePreview).popover({
 					trigger: 'hover',
 					html: true,
 					title: 'Uploaded Image Preview',
@@ -79,22 +85,43 @@
 				setImage: null,
 			}
 		},
+		computed: {
+			imagePreviewFilename() {
+				return "image-preview-filename_" + Math.random().toString(36).substring(7);
+			},
+			imagePreview() {
+				return "image-preview_" + Math.random().toString(36).substring(7);
+			},
+			dynamic() {
+				return "dynamic_" + Math.random().toString(36).substring(7);
+			},
+			imagePreviewInput() {
+				return "image-preview-input_" + Math.random().toString(36).substring(7);
+			},
+			imagePreviewInputTitle() {
+				return "image-preview-input-title_" + Math.random().toString(36).substring(7);
+			},
+			imagePreviewClear() {
+				return "image-preview-clear_" + Math.random().toString(36).substring(7);
+			},
+		},
 		methods: {
 			onSelectFile(e) {
 				var img = $('<img/>', {
-					id: 'dynamic'
+					id: 'dynamic',
+					class: this.dynamic
 				});
 				let file = e.target.files[0];
 				let reader = new FileReader();
 				if (this.size) {
 					if (file['size'] < (this.size * 1000)) {
 						reader.onloadend = (e) => {
-							$(".image-preview-input-title").text("Change");
-							$(".image-preview-clear").show();
-							$(".image-preview-filename").val(file.name);
+							$("." + this.imagePreviewInputTitle).text("Change");
+							$("." + this.imagePreviewClear).show();
+							$("." + this.imagePreviewFilename).val(file.name);
 							img.attr('src', reader.result);
 							img.attr('style', 'width:100% !important');
-							$(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show");
+							$("." + this.imagePreview).attr("data-content", $(img)[0].outerHTML).popover("show");
 							this.setImage = reader.result
 							this.$emit('input', reader.result)
 						}
@@ -108,11 +135,12 @@
 					}
 				} else {
 					reader.onloadend = (e) => {
-						$(".image-preview-input-title").text("Change");
-						$(".image-preview-clear").show();
-						$(".image-preview-filename").val(file.name);
+						$("." + this.imagePreviewInputTitle).text("Change");
+						$("." + this.imagePreviewClear).show();
+						$("." + this.imagePreviewFilename).val(file.name);
 						img.attr('src', reader.result);
-						$(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show");
+						img.attr('style', 'width:100% !important');
+						$("." + this.imagePreview).attr("data-content", $(img)[0].outerHTML).popover("show");
 						this.setImage = reader.result
 						this.$emit('input', reader.result)
 					}
@@ -120,14 +148,14 @@
 				}
 			},
 			previewClear() {
-				$('.image-preview').attr("data-content", "").popover('hide');
-				$('.image-preview-filename').val('No file chosen');
-				$('.image-preview-clear').hide();
-				$('.image-preview-input input:file').val("");
-				$(".image-preview-input-title").text("Browse");
+				$('.' + this.imagePreview).attr("data-content", "").popover('hide');
+				$('.' + this.imagePreviewFilename).val('No file chosen');
+				$('.' + this.imagePreviewClear).hide();
+				$('.' + this.imagePreviewInput + 'input:file').val("");
+				$("." + this.imagePreviewInputTitle).text("Browse");
 				this.setImage = ''
 				this.$emit('input', "")
-			}
+			},
 		}
 	}
 </script>
