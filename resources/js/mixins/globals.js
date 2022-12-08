@@ -1,7 +1,7 @@
 import Vue from "vue";
 import i18n from "../helpers/i18n";
 import store from "../stores/index";
-import datatablelanguage from "../helpers/dataTableLanguage";
+import datatablelanguage from "../helpers/datatableLanguage";
 
 Vue.mixin({
   methods: {

@@ -25,6 +25,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _johmun_vue_tags_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @johmun/vue-tags-input */ "./node_modules/@johmun/vue-tags-input/dist/vue-tags-input.js");
 /* harmony import */ var _johmun_vue_tags_input__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_johmun_vue_tags_input__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Global_CustomImageInput_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Global/CustomImageInput.vue */ "./resources/js/components/Global/CustomImageInput.vue");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -85,6 +87,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -95,17 +111,39 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: new Form({
+        category_id: '',
+        subcategory_id: '',
+        childcategory_id: '',
+        name: '',
+        buy_price: '',
+        old_sell_price: '',
+        sell_price: '',
+        point_conversion: '',
+        stock: '',
+        colors: [],
+        sizes: [],
+        description: '',
         images: [{
           image: ''
         }]
       }),
+      color: '',
+      size: '',
       categories: [],
       subcategories: [],
       childcategories: []
     };
   },
   methods: {
-    submitProduct: function submitProduct() {},
+    submitProduct: function submitProduct() {
+      this.form.post('/api/products').then(function (res) {
+        console.log('there no error');
+      })["catch"](function (error) {
+        if (error.response) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire('Oops..!', error.response.data.message, 'error');
+        }
+      });
+    },
     addNewImage: function addNewImage() {
       this.form.images.push({
         image: ''
@@ -115,7 +153,38 @@ __webpack_require__.r(__webpack_exports__);
       if (this.form.images.length > 1) {
         this.form.images.splice(index, 1);
       }
+    },
+    changeCategory: function changeCategory(e) {
+      var _this = this;
+
+      if (e) {
+        this.subcategories = [];
+        this.childcategories = [];
+        axios.get("/api/load-category-subcategories-dropdown/".concat(e)).then(function (res) {
+          _this.subcategories = res.data;
+        });
+      }
+    },
+    changeSubCategory: function changeSubCategory(e) {
+      var _this2 = this;
+
+      if (e) {
+        this.childcategories = [];
+        axios.get("/api/load-subcategory-childcategories-dropdown/".concat(e)).then(function (res) {
+          _this2.childcategories = res.data;
+        });
+      }
+    },
+    loadCategories: function loadCategories() {
+      var _this3 = this;
+
+      axios.get('/api/load-category-dropdown').then(function (res) {
+        _this3.categories = res.data;
+      });
     }
+  },
+  created: function created() {
+    this.loadCategories();
   }
 });
 
@@ -156,7 +225,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "FormGroupImage",
+  name: "CustomImageInput",
   props: {
     value: {
       "default": null
@@ -169,16 +238,7 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       required: true
     },
-    col: {
-      type: String,
-      "default": null
-    },
     required: {
-      required: false,
-      type: Boolean,
-      "default": false
-    },
-    readonly: {
       required: false,
       type: Boolean,
       "default": false
@@ -615,6 +675,9 @@ var render = function () {
               $event.preventDefault()
               return _vm.submitProduct.apply(null, arguments)
             },
+            keydown: function ($event) {
+              return _vm.form.onKeydown($event)
+            },
           },
         },
         [
@@ -630,6 +693,7 @@ var render = function () {
                   options: _vm.categories,
                   label: "Select Category",
                 },
+                on: { change: _vm.changeCategory },
                 model: {
                   value: _vm.form.category_id,
                   callback: function ($$v) {
@@ -647,6 +711,7 @@ var render = function () {
                   options: _vm.subcategories,
                   label: "Select Category",
                 },
+                on: { change: _vm.changeSubCategory },
                 model: {
                   value: _vm.form.subcategory_id,
                   callback: function ($$v) {
@@ -693,7 +758,7 @@ var render = function () {
                 attrs: {
                   type: "number",
                   step: "0.001",
-                  col: "col-md-4",
+                  col: "col-md-6",
                   form: _vm.form,
                   name: "buy_price",
                   label: "Product Buy Price",
@@ -710,11 +775,46 @@ var render = function () {
               _c("form-group-input", {
                 attrs: {
                   type: "number",
+                  col: "col-md-6",
+                  form: _vm.form,
+                  name: "stock",
+                  label: "Product Stock",
+                },
+                model: {
+                  value: _vm.form.stock,
+                  callback: function ($$v) {
+                    _vm.$set(_vm.form, "stock", $$v)
+                  },
+                  expression: "form.stock",
+                },
+              }),
+              _vm._v(" "),
+              _c("form-group-input", {
+                attrs: {
+                  type: "number",
+                  step: "0.001",
+                  col: "col-md-4",
+                  form: _vm.form,
+                  name: "old_sell_price",
+                  label: "Previous Sell Price",
+                },
+                model: {
+                  value: _vm.form.old_sell_price,
+                  callback: function ($$v) {
+                    _vm.$set(_vm.form, "old_sell_price", $$v)
+                  },
+                  expression: "form.old_sell_price",
+                },
+              }),
+              _vm._v(" "),
+              _c("form-group-input", {
+                attrs: {
+                  type: "number",
                   step: "0.001",
                   col: "col-md-4",
                   form: _vm.form,
                   name: "sell_price",
-                  label: "Product Sell Price",
+                  label: "Present Sell Price",
                 },
                 model: {
                   value: _vm.form.sell_price,
@@ -728,17 +828,19 @@ var render = function () {
               _c("form-group-input", {
                 attrs: {
                   type: "number",
+                  step: "0.001",
                   col: "col-md-4",
                   form: _vm.form,
-                  name: "stock",
-                  label: "Product Stock",
+                  name: "point_conversion",
+                  readonly: true,
+                  label: "Point Conversion",
                 },
                 model: {
-                  value: _vm.form.stock,
+                  value: _vm.form.point_conversion,
                   callback: function ($$v) {
-                    _vm.$set(_vm.form, "stock", $$v)
+                    _vm.$set(_vm.form, "point_conversion", $$v)
                   },
-                  expression: "form.stock",
+                  expression: "form.point_conversion",
                 },
               }),
               _vm._v(" "),
@@ -753,16 +855,16 @@ var render = function () {
                   _c("vue-tags-input", {
                     attrs: { placeholder: "Enter Colors (if have)" },
                     on: {
-                      "tags-changed": function (newTags) {
-                        return (_vm.tags = newTags)
+                      "tags-changed": function (newColors) {
+                        return (_vm.form.colors = newColors)
                       },
                     },
                     model: {
-                      value: _vm.form.colors,
+                      value: _vm.color,
                       callback: function ($$v) {
-                        _vm.$set(_vm.form, "colors", $$v)
+                        _vm.color = $$v
                       },
-                      expression: "form.colors",
+                      expression: "color",
                     },
                   }),
                   _vm._v(" "),
@@ -778,22 +880,22 @@ var render = function () {
                 { staticClass: "form-group col-md-6" },
                 [
                   _c("label", { attrs: { for: "colors" } }, [
-                    _vm._v("Enter Size"),
+                    _vm._v("Enter Sizes"),
                   ]),
                   _vm._v(" "),
                   _c("vue-tags-input", {
                     attrs: { placeholder: "Enter Size (if have)" },
                     on: {
-                      "tags-changed": function (newTags) {
-                        return (_vm.tags = newTags)
+                      "tags-changed": function (newTSizes) {
+                        return (_vm.form.sizes = newTSizes)
                       },
                     },
                     model: {
-                      value: _vm.form.seizes,
+                      value: _vm.size,
                       callback: function ($$v) {
-                        _vm.$set(_vm.form, "seizes", $$v)
+                        _vm.size = $$v
                       },
-                      expression: "form.seizes",
+                      expression: "size",
                     },
                   }),
                   _vm._v(" "),
@@ -806,6 +908,33 @@ var render = function () {
             ],
             1
           ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-row" }, [
+            _c(
+              "div",
+              { staticClass: "form-group col-md-12" },
+              [
+                _c("label", { attrs: { for: "colors" } }, [
+                  _vm._v("Product Description"),
+                ]),
+                _vm._v(" "),
+                _c("vue-editor", {
+                  model: {
+                    value: _vm.form.description,
+                    callback: function ($$v) {
+                      _vm.$set(_vm.form, "description", $$v)
+                    },
+                    expression: "form.description",
+                  },
+                }),
+                _vm._v(" "),
+                _c("has-error", {
+                  attrs: { form: _vm.form, field: "description" },
+                }),
+              ],
+              1
+            ),
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-row mt-2" }, [
             _c("table", { staticClass: "table table-striped" }, [
@@ -823,7 +952,7 @@ var render = function () {
                 "tbody",
                 _vm._l(_vm.form.images, function (image, i) {
                   return _c("tr", { key: i }, [
-                    _c("td", [_vm._v(_vm._s(++i))]),
+                    _c("td", [_vm._v(_vm._s(i))]),
                     _vm._v(" "),
                     _c(
                       "td",
@@ -831,8 +960,7 @@ var render = function () {
                         _c("custom-image-input", {
                           attrs: {
                             form: _vm.form,
-                            name: "logo",
-                            label: "Shop Logo",
+                            name: "images." + i + ".image",
                           },
                           model: {
                             value: image.image,
@@ -894,6 +1022,18 @@ var render = function () {
               ]
             ),
           ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary btn-block btn-lg mt-3 font-bold",
+              attrs: { type: "submit", disabled: _vm.form.busy },
+            },
+            [
+              _c("i", { staticClass: "fas fa-paper-plane" }),
+              _vm._v(" Create Product\n\t\t"),
+            ]
+          ),
         ]
       ),
     ]
@@ -923,8 +1063,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "form-group", class: _vm.col },
+    "fragment",
     [
       _c(
         "div",

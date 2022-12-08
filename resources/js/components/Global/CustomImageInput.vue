@@ -1,5 +1,5 @@
 <template>
-	<div class="form-group" :class="col">
+	<fragment>
 		<div class="input-group image-preview" :class="imagePreview">
 			<input type="text" class="form-control image-preview-filename" :class="imagePreviewFilename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
 			<div class="input-group-append">
@@ -15,14 +15,14 @@
 			</div>
 		</div>
 		<has-error :form="form" :field="name"></has-error>
-	</div>
+	</fragment>
 </template>
 
 <script>
 	import Swal from "sweetalert2";
 
 	export default {
-		name: "FormGroupImage",
+		name: "CustomImageInput",
 		props: {
 			value: {
 				default: null
@@ -35,16 +35,7 @@
 				type: Object,
 				required: true
 			},
-			col: {
-				type: String,
-				default: null
-			},
 			required: {
-				required: false,
-				type: Boolean,
-				default: false
-			},
-			readonly: {
 				required: false,
 				type: Boolean,
 				default: false

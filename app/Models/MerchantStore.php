@@ -29,7 +29,6 @@ class MerchantStore extends Model
      */
     protected $casts = [
         'product' => 'boolean',
-        'status'  => 'boolean',
     ];
 
     /**

@@ -2,8 +2,15 @@
 
 namespace App\Http\Controllers\Api\V1\Product;
 
+use Auth;
+use App\Models\Product;
+use Illuminate\Support\Str;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use App\Models\MerchantStore;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
+use Stevebauman\Purify\Facades\Purify;
 
 class ProductController extends Controller
 {
@@ -13,8 +20,65 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'VAL1' => 'required',
+            'category_id'      => 'required',
+            'subcategory_id'   => 'required',
+            'childcategory_id' => 'nullable',
+            'name'             => 'required|max:191',
+            'buy_price'        => 'required|numeric|min:1',
+            'old_sell_price'   => 'nullable|numeric',
+            'sell_price'       => 'required|numeric',
+            'stock'            => 'required|numeric|min:1',
+            'colors'           => 'nullable|array',
+            'colors.*.text'    => 'required',
+            'sizes'            => 'nullable|array',
+            'sizes.*.text'     => 'required',
+            'description'      => 'required',
+            'images'           => 'required|array',
+            'images.*.image'   => 'required|base64mimes:jpeg,jpg,png|base64max:3000',
         ]);
+
+        $store = MerchantStore::whereMerchantId(Auth::id())->first();
+        if ($store == null || ($store->status != 1)) {
+            return response()->json(['message' => 'Your store not create yet or block now.'], 503);
+        }
+
+        $in = $request->except(['images', 'colors', 'sizes', 'description']);
+        $in['slug'] = Str::slug($request->input('name'));
+        $in['merchant_store_id'] = $store->id;
+
+        $colors = [];
+        if (count($request->input('colors'))) {
+            foreach ($request->input('colors') as $color) {
+                $colors[] = $color['text'];
+            }
+        }
+        $sizes = [];
+        if (count($request->input('sizes'))) {
+            foreach ($request->input('sizes') as $size) {
+                $sizes[] = $size['text'];
+            }
+        }
+        $in['colors'] = $colors;
+        $in['sizes'] = $sizes;
+        $in['point'] = customRound($request->input('sell_price') - $request->input('buy_price'));
+        $in['description'] = Purify::clean($request->input('description'));
+        $product = Product::create($in);
+        foreach ($request->input('images') as $key => $image) {
+            $file = $image['image'];
+            $ext = 'webp';
+            $start = $product->id . '_' . Str::random(12);
+            Image::make($file)->encode('webp', 90)->resize(218, 218)->save(public_path("storage/products/{$start}.{$ext}")); //218X218
+            Image::make($file)->encode('webp', 90)->resize(107, 107)->save(public_path("storage/products/{$start}_107X107.{$ext}")); //107X107
+            Image::make($file)->encode('webp', 90)->resize(458, 458)->save(public_path("storage/products/{$start}_458X458.{$ext}")); //458X458
+            if ($key == 0) {
+                $product->image = $start . '.' . $ext;
+                $product->save();
+            }
+            ProductImage::create([
+                'product_id' => $product->id,
+                'name'       => $start,
+            ]);
+        }
 
     }
 }

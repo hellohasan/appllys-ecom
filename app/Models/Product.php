@@ -13,15 +13,21 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'merchant_id',
+        'merchant_store_id',
         'category_id',
         'subcategory_id',
         'childcategory_id',
         'name',
         'slug',
         'buy_price',
+        'old_sell_price',
         'sell_price',
+        'point',
         'stock',
+        'colors',
+        'sizes',
+        'description',
+        'image',
         'status',
     ];
 
@@ -30,5 +36,7 @@ class Product extends Model
      */
     protected $casts = [
         'boolean' => 'status',
+        'colors'  => 'json',
+        'sizes'   => 'json',
     ];
 }

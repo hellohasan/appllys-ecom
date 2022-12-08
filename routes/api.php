@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('load-category-dropdown', [SelectDropdownController::class, 'loadCategories']);
     Route::get('load-category-subcategories-dropdown/{catId}', [SelectDropdownController::class, 'loadCategorySubcategories']);
+    Route::get('load-subcategory-childcategories-dropdown/{catId}', [SelectDropdownController::class, 'loadSubcategoryChildCategory']);
     Route::get('load-merchant-list', [SelectDropdownController::class, 'loadMerchants']);
 
     Route::get('load-division-districts/{id}', [SelectDropdownController::class, 'loadDivisionDistricts']);

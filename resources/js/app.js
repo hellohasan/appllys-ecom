@@ -18,6 +18,9 @@ Vue.use(Meta);
 import directives from "./directives";
 Vue.use(directives);
 
+import { VueEditor } from "vue2-editor";
+Vue.component("VueEditor", VueEditor);
+
 import Chartkick from "vue-chartkick";
 import Chart from "chart.js";
 Vue.use(Chartkick.use(Chart));

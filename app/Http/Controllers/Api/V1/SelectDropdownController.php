@@ -6,6 +6,7 @@ use DB;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\ChildCategory;
 use App\Http\Controllers\Controller;
 use Devfaysal\BangladeshGeocode\Models\Union;
 use Devfaysal\BangladeshGeocode\Models\Upazila;
@@ -25,7 +26,7 @@ class SelectDropdownController extends Controller
 
     public function loadMerchants()
     {
-        return User::role("Merchant")->select([
+        return User::role("Super Admin")->select([
             'id',
             DB::raw('CONCAT(name," - ",email) as text'),
         ])->get();
@@ -37,6 +38,14 @@ class SelectDropdownController extends Controller
     public function loadCategorySubcategories($catId)
     {
         return SubCategory::whereCategoryId($catId)->whereStatus(true)->select(['id', 'name as text'])->get();
+    }
+
+    /**
+     * @param $id
+     */
+    public function loadSubcategoryChildCategory($sCatId)
+    {
+        return ChildCategory::whereCategoryId($sCatId)->whereStatus(true)->select(['id', 'name as text'])->get();
     }
 
     /**
