@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\User\UserController;
+use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Settings\RoleController;
@@ -72,9 +73,18 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     /* Product Controller */
     Route::post('products', [ProductController::class, 'store']);
+    Route::get('products', [ProductController::class, 'index']);
+    Route::get('products/{id}/edit', [ProductController::class, 'edit']);
+    Route::put('products/{id}/edit', [ProductController::class, 'update']);
 
     Route::get('basic-setting', [BasicSettingController::class, 'getBasicSetting']);
     Route::post('basic-setting-submit', [BasicSettingController::class, 'submitBasicSetting']);
+
+    /* Payment Method Controller */
+    Route::get('payment-method', [PaymentMethodController::class, 'index'])->permission('payment-method');
+    Route::post('payment-method', [PaymentMethodController::class, 'store'])->permission('payment-method-store');
+    Route::get('payment-method/{id}/edit', [PaymentMethodController::class, 'edit'])->permission('payment-method-edit');
+    Route::put('payment-method/{id}/edit', [PaymentMethodController::class, 'update'])->permission('payment-method-update');
 
     Route::get('load-category-dropdown', [SelectDropdownController::class, 'loadCategories']);
     Route::get('load-category-subcategories-dropdown/{catId}', [SelectDropdownController::class, 'loadCategorySubcategories']);

@@ -100,6 +100,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -134,10 +139,19 @@ __webpack_require__.r(__webpack_exports__);
       childcategories: []
     };
   },
+  computed: {
+    calculatePoint: function calculatePoint() {
+      return this.form.sell_price - this.form.buy_price;
+    }
+  },
   methods: {
     submitProduct: function submitProduct() {
+      var _this = this;
+
       this.form.post('/api/products').then(function (res) {
-        console.log('there no error');
+        _this.form.reset();
+
+        _this.successCreateMessage('Product Created Successfully.');
       })["catch"](function (error) {
         if (error.response) {
           sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire('Oops..!', error.response.data.message, 'error');
@@ -155,31 +169,31 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     changeCategory: function changeCategory(e) {
-      var _this = this;
+      var _this2 = this;
 
       if (e) {
         this.subcategories = [];
         this.childcategories = [];
         axios.get("/api/load-category-subcategories-dropdown/".concat(e)).then(function (res) {
-          _this.subcategories = res.data;
+          _this2.subcategories = res.data;
         });
       }
     },
     changeSubCategory: function changeSubCategory(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (e) {
         this.childcategories = [];
         axios.get("/api/load-subcategory-childcategories-dropdown/".concat(e)).then(function (res) {
-          _this2.childcategories = res.data;
+          _this3.childcategories = res.data;
         });
       }
     },
     loadCategories: function loadCategories() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get('/api/load-category-dropdown').then(function (res) {
-        _this3.categories = res.data;
+        _this4.categories = res.data;
       });
     }
   },
@@ -754,8 +768,9 @@ var render = function () {
                 },
               }),
               _vm._v(" "),
-              _c("form-group-input", {
+              _c("form-group-input-group", {
                 attrs: {
+                  text: "BDT",
                   type: "number",
                   step: "0.001",
                   col: "col-md-6",
@@ -772,8 +787,9 @@ var render = function () {
                 },
               }),
               _vm._v(" "),
-              _c("form-group-input", {
+              _c("form-group-input-group", {
                 attrs: {
+                  text: "UNIT",
                   type: "number",
                   col: "col-md-6",
                   form: _vm.form,
@@ -789,12 +805,13 @@ var render = function () {
                 },
               }),
               _vm._v(" "),
-              _c("form-group-input", {
+              _c("form-group-input-group", {
                 attrs: {
                   type: "number",
                   step: "0.001",
                   col: "col-md-4",
                   form: _vm.form,
+                  text: "BDT",
                   name: "old_sell_price",
                   label: "Previous Sell Price",
                 },
@@ -807,12 +824,13 @@ var render = function () {
                 },
               }),
               _vm._v(" "),
-              _c("form-group-input", {
+              _c("form-group-input-group", {
                 attrs: {
                   type: "number",
                   step: "0.001",
                   col: "col-md-4",
                   form: _vm.form,
+                  text: "BDT",
                   name: "sell_price",
                   label: "Present Sell Price",
                 },
@@ -825,24 +843,48 @@ var render = function () {
                 },
               }),
               _vm._v(" "),
-              _c("form-group-input", {
-                attrs: {
-                  type: "number",
-                  step: "0.001",
-                  col: "col-md-4",
-                  form: _vm.form,
-                  name: "point_conversion",
-                  readonly: true,
-                  label: "Point Conversion",
-                },
-                model: {
-                  value: _vm.form.point_conversion,
-                  callback: function ($$v) {
-                    _vm.$set(_vm.form, "point_conversion", $$v)
-                  },
-                  expression: "form.point_conversion",
-                },
-              }),
+              _c(
+                "div",
+                { staticClass: "form-group col-md-4" },
+                [
+                  _c("label", { attrs: { for: "point" } }, [
+                    _vm._v("Product Point"),
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.calculatePoint,
+                        expression: "calculatePoint",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.form.errors.has("point") },
+                    attrs: {
+                      type: "text",
+                      readonly: "",
+                      id: "point",
+                      placeholder: "Product Point",
+                    },
+                    domProps: { value: _vm.calculatePoint },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.calculatePoint = $event.target.value
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("has-error", {
+                    attrs: { form: _vm.form, field: "point" },
+                  }),
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -1063,7 +1105,8 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "fragment",
+    "div",
+    { staticClass: "form-group" },
     [
       _c(
         "div",

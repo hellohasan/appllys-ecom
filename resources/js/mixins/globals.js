@@ -5,22 +5,31 @@ import datatablelanguage from "../helpers/datatableLanguage";
 
 Vue.mixin({
   methods: {
-    successCreateMessage() {
+    successCreateMessage(message = null) {
+      if (message == null) {
+        message = i18n.tc("success_message_create");
+      }
       Toast.fire({
         icon: "success",
-        title: i18n.tc("success_message_create"),
+        title: message,
       });
     },
-    successUpdateMessage() {
+    successUpdateMessage(message = null) {
+      if (message == null) {
+        message = i18n.tc("success_message_update");
+      }
       Toast.fire({
         icon: "success",
-        title: i18n.tc("success_message_update"),
+        title: message,
       });
     },
-    successDeleteMessage() {
+    successDeleteMessage(message = null) {
+      if (message == null) {
+        message = i18n.tc("delete_message");
+      }
       Toast.fire({
         icon: "success",
-        title: i18n.tc("delete_message"),
+        title: message,
       });
     },
     successPublishMessage() {

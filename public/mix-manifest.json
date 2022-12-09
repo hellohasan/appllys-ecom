@@ -11,5 +11,11 @@
     "/js/admin/products/create.js": "/js/admin/products/create.js",
     "/js/admin/products/edit.js": "/js/admin/products/edit.js",
     "/js/settings/basic-setting.js": "/js/settings/basic-setting.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/merchant/point-request-create.js": "/js/merchant/point-request-create.js",
+    "/js/merchant/point-request-index.js": "/js/merchant/point-request-index.js",
+    "/js/admin/payment-method.js": "/js/admin/payment-method.js",
+    "/js/admin/payment-method/index.js": "/js/admin/payment-method/index.js",
+    "/js/admin/payment-method/create.js": "/js/admin/payment-method/create.js",
+    "/js/admin/payment-method/edit.js": "/js/admin/payment-method/edit.js"
 }

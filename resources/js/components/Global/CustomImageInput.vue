@@ -1,5 +1,5 @@
 <template>
-	<fragment>
+	<div class="form-group">
 		<div class="input-group image-preview" :class="imagePreview">
 			<input type="text" class="form-control image-preview-filename" :class="imagePreviewFilename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
 			<div class="input-group-append">
@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<has-error :form="form" :field="name"></has-error>
-	</fragment>
+	</div>
 </template>
 
 <script>

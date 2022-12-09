@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WelcomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,15 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/', function () {
-    return redirect('/login');
-
-    return view('welcome');
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('home');
+Route::get('product-details/{custom}/{slug}', [WelcomeController::class, 'productDetails'])->name('product-details');
 
 /* Auth::routes(); */
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/backend', function () {
     return view('layouts.master');

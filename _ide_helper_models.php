@@ -44,14 +44,20 @@ namespace App\Models{
  * @property int $id
  * @property string $name
  * @property string $slug
+ * @property string|null $image
  * @property bool $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
+ * @property-read int|null $products_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\SubCategory[] $subcategories
+ * @property-read int|null $subcategories_count
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category query()
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereStatus($value)
@@ -127,6 +133,35 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * App\Models\PaymentMethod
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $image
+ * @property string $val1
+ * @property string|null $val2
+ * @property array|null $val3
+ * @property bool $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentMethod newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentMethod newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentMethod query()
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentMethod whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentMethod whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentMethod whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentMethod whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentMethod whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentMethod whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentMethod whereVal1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentMethod whereVal2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentMethod whereVal3($value)
+ */
+	class PaymentMethod extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Product
  *
  * @property int $id
@@ -134,6 +169,7 @@ namespace App\Models{
  * @property int $category_id
  * @property int $subcategory_id
  * @property int|null $childcategory_id
+ * @property string|null $custom
  * @property string $name
  * @property string $slug
  * @property float $buy_price
@@ -145,10 +181,16 @@ namespace App\Models{
  * @property array|null $sizes
  * @property string|null $description
  * @property string|null $image
- * @property int $status
+ * @property bool $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property mixed $boolean
+ * @property-read \App\Models\Category $category
+ * @property-read \App\Models\ChildCategory|null $childcategory
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProductImage[] $images
+ * @property-read int|null $images_count
+ * @property-read \App\Models\MerchantStore $store
+ * @property-read \App\Models\SubCategory $subcategory
  * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Product newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Product query()
@@ -157,6 +199,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereChildcategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereColors($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereCustom($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereImage($value)
@@ -208,6 +251,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Category $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChildCategory[] $childcategories
+ * @property-read int|null $childcategories_count
  * @method static \Illuminate\Database\Eloquent\Builder|SubCategory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SubCategory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SubCategory query()

@@ -5,6 +5,7 @@ import CustomCard from "./CustomCard";
 import Form from "vform";
 import FormGroupButton from "./FormGroupButton";
 import FormGroupInput from "./FormGroupInput";
+import FormGroupInputGroup from "./FormGroupInputGroup";
 import FormGroupDate from "./FormGroupDate";
 import FormGroupSelect from "./FormGroupSelect";
 import FormGroupToggle from "./FormGroupToggle";
@@ -30,6 +31,7 @@ window.Form = Form;
   Errors,
   FormGroupButton,
   FormGroupInput,
+  FormGroupInputGroup,
   FormGroupDate,
   FormGroupTextarea,
   FormGroupSelect,

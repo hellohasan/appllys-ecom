@@ -8,12 +8,17 @@
 
 				<form-group-input col="col-md-12" :form="form" v-model="form.name" name="name" label="Product Name"></form-group-input>
 
-				<form-group-input type="number" step="0.001" col="col-md-6" :form="form" v-model="form.buy_price" name="buy_price" label="Product Buy Price"></form-group-input>
-				<form-group-input type="number" col="col-md-6" :form="form" v-model="form.stock" name="stock" label="Product Stock"></form-group-input>
+				<form-group-input-group text="BDT" type="number" step="0.001" col="col-md-6" :form="form" v-model="form.buy_price" name="buy_price" label="Product Buy Price"></form-group-input-group>
+				<form-group-input-group text="UNIT" type="number" col="col-md-6" :form="form" v-model="form.stock" name="stock" label="Product Stock"></form-group-input-group>
 
-				<form-group-input type="number" step="0.001" col="col-md-4" :form="form" v-model="form.old_sell_price" name="old_sell_price" label="Previous Sell Price"></form-group-input>
-				<form-group-input type="number" step="0.001" col="col-md-4" :form="form" v-model="form.sell_price" name="sell_price" label="Present Sell Price"></form-group-input>
-				<form-group-input type="number" step="0.001" col="col-md-4" :form="form" v-model="form.point_conversion" name="point_conversion" :readonly="true" label="Point Conversion"></form-group-input>
+				<form-group-input-group type="number" step="0.001" col="col-md-4" :form="form" v-model="form.old_sell_price" text="BDT" name="old_sell_price" label="Previous Sell Price"></form-group-input-group>
+				<form-group-input-group type="number" step="0.001" col="col-md-4" :form="form" v-model="form.sell_price" text="BDT" name="sell_price" label="Present Sell Price"></form-group-input-group>
+
+				<div class="form-group col-md-4">
+					<label for="point">Product Point</label>
+					<input type="text" v-model="calculatePoint" readonly :class="{ 'is-invalid': form.errors.has('point') }" id="point" placeholder="Product Point" class="form-control">
+					<has-error :form="form" field="point"></has-error>
+				</div>
 
 				<div class="form-group col-md-6">
 					<label for="colors">Enter Colors</label>
@@ -107,10 +112,16 @@
 				childcategories: [],
 			}
 		},
+		computed: {
+			calculatePoint() {
+				return this.form.sell_price - this.form.buy_price;
+			}
+		},
 		methods: {
 			submitProduct() {
 				this.form.post('/api/products').then((res) => {
-					console.log('there no error');
+					this.form.reset();
+					this.successCreateMessage('Product Created Successfully.');
 				}).catch((error) => {
 					if (error.response) {
 						Swal.fire(

@@ -56,11 +56,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       form: new Form({
         name: '',
+        image: '',
         status: false
       }),
       editId: '',
@@ -90,7 +96,8 @@ __webpack_require__.r(__webpack_exports__);
     editModal: function editModal(type) {
       this.$refs.modalRef.openMyModal(true);
       this.editId = type.id;
-      this.form.fill(type);
+      this.form.name = type.name;
+      this.form.status = type.status;
     },
     updateForm: function updateForm() {
       var _this2 = this;
@@ -721,6 +728,15 @@ var render = function () {
                     return _c("tr", { key: category.id }, [
                       _c("td", [_vm._v(_vm._s(++index))]),
                       _vm._v(" "),
+                      _c("td", [
+                        _c("img", {
+                          attrs: {
+                            src: "/storage/categories/" + category.image,
+                            alt: "",
+                          },
+                        }),
+                      ]),
+                      _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(category.name))]),
                       _vm._v(" "),
                       _c(
@@ -778,6 +794,17 @@ var render = function () {
                 },
               }),
               _vm._v(" "),
+              _c("form-group-image", {
+                attrs: { form: _vm.form, label: "Image", name: "image" },
+                model: {
+                  value: _vm.form.image,
+                  callback: function ($$v) {
+                    _vm.$set(_vm.form, "image", $$v)
+                  },
+                  expression: "form.image",
+                },
+              }),
+              _vm._v(" "),
               _c("form-group-toggle", {
                 attrs: { form: _vm.form, id: "status", label: "Status" },
                 model: {
@@ -805,6 +832,8 @@ var staticRenderFns = [
     return _c("thead", [
       _c("tr", [
         _c("th", [_vm._v("SL")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Image")]),
         _vm._v(" "),
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
