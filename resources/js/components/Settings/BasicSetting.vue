@@ -2,7 +2,15 @@
 	<card :title="$t('basic_setting')">
 		<form @submit.prevent="handelForm" role="form" method="post" @keydown="form.onKeydown($event)">
 			<div class="form-row">
-				<form-group-input col="col-md-12" :form="form" v-model="form.title" name="title" :label="$t('app_title')"></form-group-input>
+				<form-group-input col="col-md-6" :form="form" v-model="form.title" name="title" :label="$t('app_title')"></form-group-input>
+				<div class="form-group col-md-6">
+					<label for="point">Point Conversion</label>
+					<div class="input-group">
+						<div class="input-group-prepend"><span class="input-group-text">1 Point = </span></div>
+						<input type="number" step="0.001" v-model="form.point" class="form-control" required>
+						<div class="input-group-append"><span class="input-group-text">BDT</span></div>
+					</div>
+				</div>
 				<form-group-input col="col-md-6" :form="form" v-model="form.phone" name="phone" :label="$t('Phone')"></form-group-input>
 				<form-group-input col="col-md-6" type="email" :form="form" v-model="form.email" name="email" :label="$t('Email')"></form-group-input>
 				<form-group-input col="col-md-6" :form="form" v-model="form.address" name="address" :label="$t('Address')"></form-group-input>
@@ -24,6 +32,7 @@
 					name: '',
 					est: '',
 					phone: '',
+					point: '',
 					email: '',
 					address: '',
 					copy_text: ''

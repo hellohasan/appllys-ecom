@@ -41,6 +41,11 @@ class MerchantStoreController extends Controller
             'status'      => 'boolean',
         ]);
 
+        $chk = MerchantStore::whereMerchantId($request->input('merchant_id'))->exists();
+        if ($chk) {
+            return response()->json(['message' => 'This merchant already have a store'], 503);
+        }
+
         $in = $request->except(['logo', 'banner']);
         $in['slug'] = Str::slug($request->input('name'));
         if ($request->logo) {

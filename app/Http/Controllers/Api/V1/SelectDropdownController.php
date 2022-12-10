@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\ChildCategory;
+use App\Models\PaymentMethod;
 use App\Http\Controllers\Controller;
 use Devfaysal\BangladeshGeocode\Models\Union;
 use Devfaysal\BangladeshGeocode\Models\Upazila;
@@ -26,7 +27,7 @@ class SelectDropdownController extends Controller
 
     public function loadMerchants()
     {
-        return User::role("Super Admin")->select([
+        return User::role("Merchant")->select([
             'id',
             DB::raw('CONCAT(name," - ",email) as text'),
         ])->get();
@@ -70,6 +71,11 @@ class SelectDropdownController extends Controller
     public function loadUpazilaUnions($id)
     {
         return Union::select(['id', 'bn_name as text'])->whereUpazilaId($id)->get();
+    }
+
+    public function getPaymentList()
+    {
+        return PaymentMethod::whereStatus(true)->get();
     }
 
 }

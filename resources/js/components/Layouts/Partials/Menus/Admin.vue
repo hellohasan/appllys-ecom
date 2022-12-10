@@ -75,10 +75,10 @@
 		</li>
 
 		<!-- Others -->
-
+		<li v-permission="['payment-method','payment-method-create']" class="nav-header">Order Management</li>
 		<li v-role="['Super Admin']" class="nav-item">
 			<a href="#" class="nav-link">
-				<i class="nav-icon fas fa-home"></i>
+				<i class="nav-icon fas fa-shopping-cart"></i>
 				<p>Order Management<i class="right fas fa-angle-left"></i></p>
 			</a>
 			<ul class="nav nav-treeview">
@@ -109,33 +109,21 @@
 			</ul>
 		</li>
 
-		<li v-role="['Super Admin']" class="nav-item">
-			<a href="#" class="nav-link">
-				<i class="nav-icon fas fa-cookie-bite"></i>
-				<p>Point Management<i class="right fas fa-angle-left"></i></p>
-			</a>
-			<ul class="nav nav-treeview">
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="far fa-circle nav-icon"></i>
-						<p>Assign Point</p>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="far fa-circle nav-icon"></i>
-						<p>Point Exchange</p>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="far fa-circle nav-icon"></i>
-						<p>Point Request</p>
-					</a>
-				</li>
-			</ul>
+		<li v-permission="['payment-method','payment-method-create']" class="nav-header">Point Management</li>
+		<li class="nav-item" v-role="['Super Admin']">
+			<router-link :to="{name:'admin.assign-point'}" class=" nav-link">
+				<i class="nav-icon fas fa-plus cyan"></i>
+				<p>Assign Point</p>
+			</router-link>
+		</li>
+		<li class="nav-item" v-role="['Super Admin']">
+			<router-link :to="{name:'admin.point-requests'}" class=" nav-link">
+				<i class="nav-icon fas fa-sort-numeric-up-alt cyan"></i>
+				<p>Point Request</p>
+			</router-link>
 		</li>
 
+		<li v-permission="['payment-method','payment-method-create']" class="nav-header">Store Management</li>
 		<li v-role="['Super Admin']" class="nav-item">
 			<a href="#" class="nav-link">
 				<i class="nav-icon fas fa-home"></i>
@@ -156,10 +144,10 @@
 				</li>
 			</ul>
 		</li>
-
+		<li v-permission="['payment-method','payment-method-create']" class="nav-header">Commission Management</li>
 		<li v-role="['Super Admin']" class="nav-item">
 			<a href="#" class="nav-link">
-				<i class="nav-icon fas fa-home"></i>
+				<i class="nav-icon fas fa-percentage"></i>
 				<p>Manage Commission<i class="right fas fa-angle-left"></i></p>
 			</a>
 			<ul class="nav nav-treeview">

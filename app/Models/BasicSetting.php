@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class BasicSetting extends Model
 {
@@ -12,5 +12,5 @@ class BasicSetting extends Model
     /**
      * @var array
      */
-    protected $fillable = ['title', 'phone', 'email', 'address', 'copy_text'];
+    protected $fillable = ['title', 'phone', 'email', 'address', 'copy_text', 'point'];
 }

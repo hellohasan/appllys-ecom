@@ -8,11 +8,13 @@ use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Settings\RoleController;
+use App\Http\Controllers\Api\V1\Admin\PointController;
 use App\Http\Controllers\Api\V1\SelectDropdownController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\V1\Product\ProductController;
 use App\Http\Controllers\Api\Auth\ForgetPasswordController;
 use App\Http\Controllers\Api\Settings\PermissionController;
+use App\Http\Controllers\Api\V1\Merchant\MerchantController;
 use App\Http\Controllers\Api\Settings\BasicSettingController;
 use App\Http\Controllers\Api\V1\Admin\MerchantStoreController;
 use App\Http\Controllers\Api\Settings\LanguageSettingController;
@@ -85,6 +87,18 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('payment-method', [PaymentMethodController::class, 'store'])->permission('payment-method-store');
     Route::get('payment-method/{id}/edit', [PaymentMethodController::class, 'edit'])->permission('payment-method-edit');
     Route::put('payment-method/{id}/edit', [PaymentMethodController::class, 'update'])->permission('payment-method-update');
+
+    Route::get('get-payment-method-list', [SelectDropdownController::class, 'getPaymentList']);
+
+    /* Point Request route */
+    Route::get('point-request', [MerchantController::class, 'logPointRequest']);
+    Route::post('point-request-submit', [MerchantController::class, 'pointRequestSubmit']);
+    Route::get('point-request/{custom}/view', [MerchantController::class, 'viewRequestSubmit']);
+
+    /* Point Request Admin */
+    Route::get('point-requests', [PointController::class, 'getRequest'])->role('Super Admin');
+    Route::get('point-requests/{custom}/view', [PointController::class, 'viewRequest'])->role('Super Admin');
+    Route::put('point-requests/{custom}/update', [PointController::class, 'updateRequest'])->role('Super Admin');
 
     Route::get('load-category-dropdown', [SelectDropdownController::class, 'loadCategories']);
     Route::get('load-category-subcategories-dropdown/{catId}', [SelectDropdownController::class, 'loadCategorySubcategories']);

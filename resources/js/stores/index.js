@@ -23,6 +23,7 @@ const store = new Vuex.Store({
   modules,
   state: {
     basic: {},
+    point: "",
     lang: locale,
     locals: locales,
   },
@@ -30,11 +31,17 @@ const store = new Vuex.Store({
     setBasic(state, data) {
       state.basic = data;
     },
+    setPoint(state, data) {
+      state.point = data;
+    },
     setLang(state, lang) {
       state.lang = lang;
     },
   },
   getters: {
+    getPoint(state) {
+      return state.point;
+    },
     getBasic(state) {
       return state.basic;
     },
@@ -49,6 +56,7 @@ const store = new Vuex.Store({
     basicAction({ commit }) {
       axios.get("/api/basic-setting").then((res) => {
         commit("setBasic", res.data);
+        commit("setPoint", res.data.point);
       });
     },
     langAction({ commit }, lang) {

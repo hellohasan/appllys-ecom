@@ -17,5 +17,9 @@
     "/js/admin/payment-method.js": "/js/admin/payment-method.js",
     "/js/admin/payment-method/index.js": "/js/admin/payment-method/index.js",
     "/js/admin/payment-method/create.js": "/js/admin/payment-method/create.js",
-    "/js/admin/payment-method/edit.js": "/js/admin/payment-method/edit.js"
+    "/js/admin/payment-method/edit.js": "/js/admin/payment-method/edit.js",
+    "/js/merchant/point-request-view.js": "/js/merchant/point-request-view.js",
+    "/js/admin/point-requests.js": "/js/admin/point-requests.js",
+    "/js/admin/point-requests/assign.js": "/js/admin/point-requests/assign.js",
+    "/js/admin/point-requests/view.js": "/js/admin/point-requests/view.js"
 }

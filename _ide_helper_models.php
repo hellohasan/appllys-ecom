@@ -16,6 +16,7 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $title
+ * @property float $point
  * @property string $phone
  * @property string $email
  * @property string $address
@@ -31,6 +32,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|BasicSetting whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|BasicSetting whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|BasicSetting wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BasicSetting wherePoint($value)
  * @method static \Illuminate\Database\Eloquent\Builder|BasicSetting whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|BasicSetting whereUpdatedAt($value)
  */
@@ -158,6 +160,43 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|PaymentMethod whereVal3($value)
  */
 	class PaymentMethod extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\PointRequestLog
+ *
+ * @property int $id
+ * @property string $custom
+ * @property int $user_id
+ * @property int $merchant_store_id
+ * @property int $payment_method_id
+ * @property float $point
+ * @property float $rate
+ * @property float $amount
+ * @property string $transaction
+ * @property int $status 0=Pending,1=Approve,2=Rejected
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\MerchantStore $merchant
+ * @property-read \App\Models\PaymentMethod $method
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog query()
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog whereCustom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog whereMerchantStoreId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog wherePaymentMethodId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog wherePoint($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog whereRate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog whereTransaction($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PointRequestLog whereUserId($value)
+ */
+	class PointRequestLog extends \Eloquent {}
 }
 
 namespace App\Models{

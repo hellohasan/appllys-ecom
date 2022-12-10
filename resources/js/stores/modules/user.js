@@ -3,6 +3,7 @@ const state = {
   token: "",
   id: "",
   user: "",
+  point: "",
   roles: [],
   permissions: [],
 };
@@ -10,6 +11,9 @@ const state = {
 const mutations = {
   SET_LOGIN: (state, value) => {
     state.isLogged = value;
+  },
+  SET_POINT: (state, value) => {
+    state.point = value;
   },
   SET_TOKEN: (state, token) => {
     state.token = token;
@@ -34,6 +38,9 @@ const getters = {
   isLogged(state) {
     return state.isLogged;
   },
+  getPoint(state) {
+    return state.point;
+  },
   getId(state) {
     state.id;
   },
@@ -54,6 +61,7 @@ const getters = {
 const actions = {
   loginAction({ commit }, data) {
     commit("SET_LOGIN", true);
+    commit("SET_POINT", data.point);
     commit("SET_TOKEN", data.token);
     commit("SET_USER", data.user);
     commit("SET_ROLES", data.roles);
@@ -64,6 +72,7 @@ const actions = {
   },
   logoutAction({ commit }) {
     commit("SET_LOGIN", false);
+    commit("SET_POINT", "");
     commit("SET_TOKEN", "");
     commit("RESET_USER", "");
     commit("SET_ROLES", []);

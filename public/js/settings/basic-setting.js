@@ -41,6 +41,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "BasicSetting",
@@ -51,6 +59,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         name: '',
         est: '',
         phone: '',
+        point: '',
         email: '',
         address: '',
         copy_text: ''
@@ -204,7 +213,7 @@ var render = function () {
           [
             _c("form-group-input", {
               attrs: {
-                col: "col-md-12",
+                col: "col-md-6",
                 form: _vm.form,
                 name: "title",
                 label: _vm.$t("app_title"),
@@ -217,6 +226,48 @@ var render = function () {
                 expression: "form.title",
               },
             }),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-6" }, [
+              _c("label", { attrs: { for: "point" } }, [
+                _vm._v("Point Conversion"),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group" }, [
+                _c("div", { staticClass: "input-group-prepend" }, [
+                  _c("span", { staticClass: "input-group-text" }, [
+                    _vm._v("1 Point = "),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.point,
+                      expression: "form.point",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "number", step: "0.001", required: "" },
+                  domProps: { value: _vm.form.point },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "point", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c("span", { staticClass: "input-group-text" }, [
+                    _vm._v("BDT"),
+                  ]),
+                ]),
+              ]),
+            ]),
             _vm._v(" "),
             _c("form-group-input", {
               attrs: {

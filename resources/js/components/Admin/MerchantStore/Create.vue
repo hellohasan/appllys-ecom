@@ -16,6 +16,7 @@
 </template>
 
 <script>
+	import Swal from 'sweetalert2';
 	export default {
 		data() {
 			return {
@@ -36,6 +37,12 @@
 				this.form.post('/api/merchant-stores').then((res) => {
 					this.form.reset();
 					this.successCreateMessage();
+				}).catch((error) => {
+					Swal.fire(
+						'Oops..!',
+						error.response.data.message,
+						'error'
+					);
 				});
 			},
 			loadMerchant() {

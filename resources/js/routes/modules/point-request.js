@@ -26,4 +26,17 @@ export default [
       permission: ["point-request-list"],
     },
   },
+  {
+    path: prefix + "/point-request/:custom/view",
+    name: "merchant.point-request.view",
+    component: () =>
+      import(
+        /*webpackChunkName: "merchant/point-request-view"*/ "../../components/Merchant/PointRequest/View"
+      ),
+    meta: {
+      title: "Point Request Detail",
+      requireAuth: true,
+      permission: ["point-request-view"],
+    },
+  },
 ];

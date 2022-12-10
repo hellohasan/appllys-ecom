@@ -92,12 +92,13 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $store = MerchantStore::whereMerchantId(Auth::id())->first();
         $products = Product::with([
             'store:id,name',
             'category:id,name',
             'subcategory:id,name',
             'childcategory:id,name',
-        ])->orderByDesc('id')->get();
+        ])->whereMerchantStoreId($store->id)->orderByDesc('id')->get();
 
         $res['products'] = [];
         foreach ($products as $product) {

@@ -93,6 +93,7 @@
 						</ul>
 					</li>
 
+					<li class="nav-header">General Option</li>
 					<li class="nav-item">
 						<router-link :to="{name:'profile'}" class="nav-link">
 							<i class="nav-icon far fa-user"></i>

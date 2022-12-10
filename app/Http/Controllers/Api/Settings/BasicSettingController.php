@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Api\Settings;
 
-use App\Helpers\CustomHelper;
-use App\Http\Controllers\Controller;
 use App\Models\BasicSetting;
 use Illuminate\Http\Request;
+use App\Helpers\CustomHelper;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class BasicSettingController extends Controller
 {
     public function getBasicSetting()
     {
-        return BasicSetting::select(['title', 'email', 'phone', 'address', 'copy_text'])->first();
+        return BasicSetting::select(['title', 'point', 'email', 'phone', 'address', 'copy_text'])->first();
     }
 
     /**
@@ -41,7 +41,7 @@ class BasicSettingController extends Controller
             ]);
 
             return response()->json(['message' => 'Successfully Accepted'], 200);
-        } catch (\Exception $e) {
+        } catch (\Exception$e) {
             DB::rollback();
 
             return response()->json(['message' => 'Something is wrong there'], 503);
